@@ -1,0 +1,21 @@
+# TODO
+
+  - all: Enable UFW
+  - all: Set hostname
+  - all: SSH hardening
+  - all: OS hardening (lynis recommendations)
+  - all: motd/issue/issue.net banners
+  - all: Generalise before shutdown:
+    - Remove SSH host keys
+    - Clear nameserver configuration in /etc/resolv.conf
+    - Remove the root user password from /etc/shadow 
+    - Remove cached DHCP client leases
+    - Reset host name to localhost.localdomain
+    - Remove user data e.g. bash history
+  - all: have a "run-once script" 
+    - disable SSH at firewall in "generlize" shutdown script
+    - set a random hostname at next boot
+    - allow SSH at firewall
+    - set flag file to indicate script has already run and shouldn't run again
+  - all: disable IPv6
+  - all: serverspec, test kitchen or alternative

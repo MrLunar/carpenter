@@ -1,0 +1,51 @@
+{
+  "variables": {
+    "build_name": null,
+    "source_build": null,
+    "vagrant_box_name": null,
+
+    "output_dir": "../output/ubuntu-16.04",
+    "resources_dir": "resources"
+  },
+  "builders": [
+    {
+      "type": "virtualbox-ovf",
+
+      "vm_name": "{{ user `build_name` }}-vbox",
+      "output_directory": "{{ user `output_dir` }}/{{ user `build_name` }}-vbox",
+
+      "source_path": "{{ user `output_dir` }}/{{ user `source_build` }}-vbox/{{ user `source_build` }}-vbox.ovf",
+      "headless": "true",
+
+      "communicator": "ssh",
+      "ssh_username": "root",
+      "ssh_password": "packer",
+
+      "guest_additions_mode": "disable",
+
+      "shutdown_command": "/root/packer-shutdown.sh",
+      "post_shutdown_delay": "15s"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "file",
+      "source": "{{ user `resources_dir` }}/vagrant/packer-shutdown.sh",
+      "destination": "/root/packer-shutdown.sh"
+    },
+    {
+      "type": "shell",
+      "scripts": [
+        "{{ user `resources_dir` }}/vagrant/provision.sh",
+        "{{ user `resources_dir` }}/disk-clean.sh"
+      ]
+    }
+  ],
+  "post-processors": [
+    {
+      "type": "vagrant",
+      "vagrantfile_template": "{{ user `resources_dir` }}/vagrant/vagrantfile.rb",
+      "output": "{{ user `output_dir` }}/vagrant/{{ user `vagrant_box_name` }}-vbox.box"
+    }
+  ] 
+}

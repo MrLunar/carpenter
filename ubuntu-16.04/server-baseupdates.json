@@ -1,0 +1,60 @@
+{
+  "variables": {
+    "build_name": "ubuntu-16.04-server-baseupdates",
+    "source_build": "ubuntu-16.04-server-base",
+    
+    "output_dir": "../output/ubuntu-16.04",
+    "resources_dir": "resources"
+  },
+  "builders": [
+    {
+      "type": "virtualbox-ovf",
+
+      "vm_name": "{{ user `build_name` }}-vbox",
+      "output_directory": "{{ user `output_dir` }}/{{ user `build_name` }}-vbox",     
+
+      "source_path": "{{ user `output_dir` }}/{{ user `source_build` }}-vbox/{{ user `source_build` }}-vbox.ovf",
+      "headless": "true",
+
+      "communicator": "ssh",
+      "ssh_username": "root",
+      "ssh_password": "packer",
+      
+      "guest_additions_mode": "disable",
+
+      "shutdown_command": "shutdown -P now",
+      "post_shutdown_delay": "15s"
+    },
+    {
+      "type": "vmware-vmx",
+
+      "vm_name": "{{ user `build_name` }}-vmware",
+
+      "output_directory": "{{ user `output_dir` }}/{{ user `build_name` }}-vmware",
+      "source_path": "{{ user `output_dir` }}/{{ user `source_build` }}-vmware/{{ user `source_build` }}-vmware.vmx",
+      "headless": "true",
+
+      "communicator": "ssh",
+      "ssh_username": "root",
+      "ssh_password": "packer",
+
+      "shutdown_command": "shutdown -P now"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "expect_disconnect": "true",
+      "scripts": [
+        "{{ user `resources_dir` }}/updates/run-updates.sh"
+      ]
+    },
+    {
+      "type": "shell",
+      "pause_before": "2m",
+      "scripts": [
+        "{{ user `resources_dir` }}/disk-clean.sh"
+      ]
+    }
+  ]
+}

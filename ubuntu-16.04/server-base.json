@@ -1,0 +1,111 @@
+{
+  "variables": {
+    "build_name": "ubuntu-16.04-server-base",
+
+    "iso_url": "http://releases.ubuntu.com/16.04.2/ubuntu-16.04.2-server-amd64.iso",
+    "iso_checksum": "737ae7041212c628de5751d15c3016058b0e833fdc32e7420209b76ca3d0a535",
+    "iso_checksum_type": "sha256",
+    
+    "output_dir": "../output/ubuntu-16.04",
+    "resources_dir": "resources"
+  },
+  "builders": [
+    {
+      "type": "virtualbox-iso",
+
+      "vm_name": "{{ user `build_name` }}-vbox",
+      "output_directory": "{{ user `output_dir` }}/{{ user `build_name` }}-vbox",     
+
+      "iso_url": "{{ user `iso_url` }}",
+      "iso_checksum": "{{ user `iso_checksum` }}",
+      "iso_checksum_type": "{{ user `iso_checksum_type` }}",
+
+      "headless": "true",
+      "guest_os_type": "Ubuntu_64",
+      "vboxmanage": [
+        ["modifyvm", "{{.Name}}", "--memory", "1024"],
+        ["modifyvm", "{{.Name}}", "--cpus", "2"]
+      ],
+
+      "communicator": "ssh",
+      "ssh_username": "root",
+      "ssh_password": "packer",
+      "ssh_timeout": "20m",
+      
+      "guest_additions_mode": "upload",
+
+      "shutdown_command": "shutdown -P now",
+      "post_shutdown_delay": "15s",
+
+      "floppy_files": [
+        "{{ user `resources_dir` }}/base/preseed.cfg"
+      ],
+      "boot_command": [
+        "<enter><wait><f6><esc>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "initrd=/install/initrd.gz ",
+        "auto=true ",
+        "preseed/file=/floppy/preseed.cfg ",
+        "--<enter>"
+      ]
+    },
+    {
+      "type": "vmware-iso",
+
+      "vm_name": "{{ user `build_name` }}-vmware",
+      "output_directory": "{{ user `output_dir` }}/{{ user `build_name` }}-vmware",
+      
+      "iso_url": "{{ user `iso_url` }}",
+      "iso_checksum": "{{ user `iso_checksum` }}",
+      "iso_checksum_type": "{{ user `iso_checksum_type` }}",
+      
+      "headless": "true",
+      "guest_os_type": "ubuntu-64",
+      "vmx_data": {
+        "memsize": "1024",
+        "numvcpus": "2",
+        "scsi0.virtualdev": "lsisas1068"
+      },
+
+      "communicator": "ssh",
+      "ssh_username": "root",
+      "ssh_password": "packer",
+      
+      "shutdown_command": "shutdown -P now",
+      
+      "floppy_files": [
+        "{{ user `resources_dir` }}/base/preseed.cfg"
+      ],
+      "boot_command": [
+        "<enter><wait><f6><esc>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",        
+        "initrd=/install/initrd.gz ",
+        "auto=true ",
+        "preseed/file=/floppy/preseed.cfg ",
+        "--<enter>"
+      ]
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "only": ["virtualbox-iso"],
+      "script": "{{ user `resources_dir` }}/base/install-vbox-guest-additions.sh"
+    },
+    {
+      "type": "shell",
+      "only": ["vmware-iso"],
+      "script": "{{ user `resources_dir` }}/base/install-open-vm-tools.sh"
+    },
+    {
+      "type": "shell",
+      "script": "{{ user `resources_dir` }}/disk-clean.sh"
+    }
+  ]
+}

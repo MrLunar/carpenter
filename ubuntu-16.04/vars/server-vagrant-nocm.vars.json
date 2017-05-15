@@ -1,0 +1,5 @@
+{    
+    "build_name": "ubuntu-16.04-server-vagrant",
+    "source_build": "ubuntu-16.04-server-baseupdates",
+    "vagrant_box_name": "ubuntu-16.04-server"
+}

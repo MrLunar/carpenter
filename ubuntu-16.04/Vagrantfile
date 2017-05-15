@@ -1,0 +1,12 @@
+##
+# Used to test Vagrant boxes locally before publishing.
+##
+
+Vagrant.configure('2') do |config|
+  config.vm.define 'server' do |server|
+    server.vm.box = 'test/ubuntu-16.04-server'
+  end
+  config.vm.define 'server-chef12' do |serverchef12|
+    serverchef12.vm.box = 'test/ubuntu-16.04-server-chef12'
+  end
+end

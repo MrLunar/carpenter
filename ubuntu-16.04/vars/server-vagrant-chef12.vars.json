@@ -1,0 +1,5 @@
+{    
+    "build_name": "ubuntu-16.04-server-chef12-vagrant",
+    "source_build": "ubuntu-16.04-server-chef12",
+    "vagrant_box_name": "ubuntu-16.04-server-chef12"
+}
