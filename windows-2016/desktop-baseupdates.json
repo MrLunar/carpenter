@@ -1,0 +1,76 @@
+{
+  "variables": {
+    "build_name": "win-2016-desktop-baseupdates",
+    "source_build": "win-2016-desktop-base",
+
+    "output_dir": "../output/windows-2016",
+    "resources_dir": "resources"
+  },
+  "builders": [
+    {
+      "type": "virtualbox-ovf",
+
+      "vm_name": "{{ user `build_name` }}-vbox",
+      "output_directory": "{{ user `output_dir` }}/{{ user `build_name` }}-vbox",
+
+      "source_path": "{{ user `output_dir` }}/{{ user `source_build` }}-vbox/{{ user `source_build` }}-vbox.ovf",
+      "headless": "true",      
+      "vboxmanage": [
+        ["modifyvm", "{{.Name}}", "--memory", "2048"],
+        ["modifyvm", "{{.Name}}", "--cpus", "2"]
+      ],
+
+      "communicator": "winrm",
+      "winrm_username": "Administrator",
+      "winrm_password": "packer",
+
+      "guest_additions_mode": "disable",
+
+      "shutdown_command": "shutdown /s /t 0",
+      "shutdown_timeout": "30m",
+      "post_shutdown_delay": "30s"
+    },
+    {
+      "type": "vmware-vmx",
+
+      "vm_name": "{{ user `build_name` }}-vmware",
+
+      "output_directory": "{{ user `output_dir` }}/{{ user `build_name` }}-vmware",
+      "source_path": "{{ user `output_dir` }}/{{ user `source_build` }}-vmware/{{ user `source_build` }}-vmware.vmx",
+      "headless": "true",
+
+      "communicator": "winrm",
+      "winrm_username": "Administrator",
+      "winrm_password": "packer",
+
+      "shutdown_command": "shutdown /s /t 0",
+      "shutdown_timeout": "30m"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "powershell",
+      "elevated_user": "Administrator",
+      "elevated_password": "packer",
+      "scripts": [
+        "{{ user `resources_dir` }}/updates/EnableMicrosoftUpdates.ps1",
+        "{{ user `resources_dir` }}/updates/RunWindowsUpdate.ps1"
+      ]
+    },
+    {
+      "pause_before": "2m",
+      "type": "windows-restart",
+      "restart_timeout": "30m"
+    },    
+    {
+      "pause_before": "15m",
+      "type": "windows-restart",
+      "restart_timeout": "30m"
+    },
+    {
+      "type": "powershell",
+      "pause_before": "1m",
+      "script": "{{ user `resources_dir` }}/CleanDrive.ps1"
+    }
+  ]
+}

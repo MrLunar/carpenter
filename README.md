@@ -7,8 +7,10 @@ Carpenter is a collection of Packer templates, scripts and other resources to cr
 This currently includes:
 
   - Ubuntu 16.04 Server
-    - Vagrant box
-    - Vagrant box (with Chef 12 client included)
+    - Vagrant boxes (base, + chef client)
+
+  - Windows Server 2016 Desktop Experience
+    - Vagrant boxes (base, + chef client)
 
 More coming soon!
 

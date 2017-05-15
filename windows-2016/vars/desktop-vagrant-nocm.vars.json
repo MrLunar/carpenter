@@ -1,0 +1,6 @@
+{
+    "build_name": "win-2016-desktop-vagrant",
+    "source_build": "win-2016-desktop-baseupdates",
+    
+    "vagrant_box_name": "windows-2016-desktop"
+}
