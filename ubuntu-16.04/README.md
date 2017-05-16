@@ -12,7 +12,7 @@ You will need all the following software installed on your workstation to build 
   - [Virtualbox](https://www.virtualbox.org/) ~5.1.22
   - [Packer](https://www.packer.io/) ~1.0.0
   - [Vagrant](https://www.vagrantup.com/) ~v1.9.4
-  - A terminal running Bash (Git Bash is fine for Windows)
+  - A bash terminal (Git Bash is fine for Windows)
 
 The versions are what these templates have been tested against. Your mileage may vary against other versions.
 
@@ -24,7 +24,7 @@ The versions are what these templates have been tested against. Your mileage may
 First we build a fresh install straight from the original installation media:
 
 ```
-PACKER_CACHE_DIR=../packer_cache packer build server-base.json
+packer build server-base.json
 ```
 
 Build an updated version of the base image:
@@ -59,7 +59,7 @@ Import these boxes locally:
 vagrant box add --force --name test/ubuntu-16.04-server ../output/ubuntu-16.04/vagrant/ubuntu-16.04-server-vbox.box
 ```
 ```
-vagrant box add --force --name test/ubuntu-16.04-server-chef12 output/ubuntu-16.04/vagrant/ubuntu-16.04-server-chef12-vbox.box
+vagrant box add --force --name test/ubuntu-16.04-server-chef12 ../output/ubuntu-16.04/vagrant/ubuntu-16.04-server-chef12-vbox.box
 ```
 
 You can now run and test these local boxes:

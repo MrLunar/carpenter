@@ -10,10 +10,10 @@ This is currently just Vagrant boxes.
 First we build a fresh install straight from the original installation media:
 
 ```
-PACKER_CACHE_DIR=../packer_cache packer build desktop-base.json
+packer build desktop-base.json
 ```
 
-Now we can update the base image with the latest updates. WARNING: This will take quite some time due to the nature of Windows Updates.
+Now we can update the base image with the latest updates. WARNING: This stage will take quite some time due to the nature of Windows Updates.
 
 ```
 packer build desktop-baseupdates.json
