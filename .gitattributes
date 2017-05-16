@@ -3,6 +3,7 @@
 
 *.rb text eol=lf
 *.sh text eol=lf
+Vagrantfile text eol=lf
 
 *.ps1 text eol=crlf
 *.cmd text eol=crlf
