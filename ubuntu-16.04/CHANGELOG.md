@@ -1,5 +1,12 @@
 # Change Log - Ubuntu 16.04
 
+#### Unreleased
+
+Features: 
+
+  - Install security updates on first-boot
+  - Automated security updates
+
 #### v0.1.0 (16th May 2015)
 
 Features:
