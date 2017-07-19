@@ -63,7 +63,7 @@ systemctl enable vagrant-first-boot-init
 
 echo "Configuring firewall ... "
 ufw disable
-ufw reset
+echo y | ufw reset
 ufw default deny incoming
 ufw default allow outgoing
 ufw allow ssh
