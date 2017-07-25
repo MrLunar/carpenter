@@ -37,7 +37,8 @@
       "type": "shell",
       "scripts": [
         "{{ user `resources_dir` }}/vagrant/provision.sh",
-        "{{ user `resources_dir` }}/disk-clean.sh"
+        "{{ user `resources_dir` }}/disk-clean.sh",
+        "{{ user `resources_dir` }}/zero-disk.sh"
       ]
     }
   ],

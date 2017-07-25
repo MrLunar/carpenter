@@ -1,11 +1,13 @@
 # Change Log - Ubuntu 16.04
 
-#### Unreleased
+#### v0.2.0 (25th May 2017)
 
 Features: 
 
+  - Package upgrades as of 2017-07-25
   - Install security updates on first-boot
   - Automated security updates
+  - Increase disk size to 120GB (Was 40GB)
 
 #### v0.1.0 (16th May 2015)
 

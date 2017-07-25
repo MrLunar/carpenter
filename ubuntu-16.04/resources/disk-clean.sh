@@ -12,9 +12,5 @@ find /var/cache -type f -exec rm -rf {} \;
 rm -rf /tmp/*
 find /var/log -type f | while read f; do echo -ne '' > "${f}"; done;
 
-echo "Zeroing free space ..."
-dd if=/dev/zero of=/EMPTY bs=1M  || echo "dd exit code $? is suppressed"
-rm -f /EMPTY
-
 echo "Syncing filesystem ..."
 sync

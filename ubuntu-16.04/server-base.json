@@ -22,6 +22,7 @@
 
       "headless": "true",
       "guest_os_type": "Ubuntu_64",
+      "disk_size": "120000",
       "vboxmanage": [
         ["modifyvm", "{{.Name}}", "--memory", "1024"],
         ["modifyvm", "{{.Name}}", "--cpus", "2"]
@@ -64,6 +65,7 @@
       
       "headless": "true",
       "guest_os_type": "ubuntu-64",
+      "disk_size": "120000",
       "vmx_data": {
         "memsize": "1024",
         "numvcpus": "2",
