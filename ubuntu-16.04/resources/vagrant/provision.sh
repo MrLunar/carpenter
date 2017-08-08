@@ -21,13 +21,11 @@ echo "ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEA6NF8iallvQVp22WDkTkyrtvp9eWW6A8YVr+kz4
 chown -R vagrant:vagrant /home/vagrant/.ssh
 
 echo "Installing unattended-upgrades configuration ..."
-mv /etc/apt/apt.conf.d/20auto-upgrades /etc/apt/apt.conf.d/20auto-upgrades.old
 cat >/etc/apt/apt.conf.d/20auto-upgrades <<'EOL'
 APT::Periodic::Update-Package-Lists "1";
 APT::Periodic::Unattended-Upgrade "1";
 APT::Periodic::AutocleanInterval "7";
 EOL
-mv /etc/apt/apt.conf.d/50unattended-upgrades /etc/apt/apt.conf.d/50unattended-upgrades.old
 cat >/etc/apt/apt.conf.d/50unattended-upgrades <<'EOL'
 Unattended-Upgrade::Allowed-Origins {
   "${distro_id}:${distro_codename}-security";

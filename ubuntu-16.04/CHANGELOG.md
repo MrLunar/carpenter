@@ -1,10 +1,12 @@
 # Change Log - Ubuntu 16.04
 
-#### UNRELEASED
+#### v0.2.1 (8th August 2017)
 
-  - Fix security upgrades at first boot potentially causing apt locks. Now blocks SSH until completed.
+  - Package upgrades as of 2017-08-08
+  - Fix security upgrades at first boot potentially causing apt locks. Now blocks SSH access until completed
+  - Fix warnings from apt operations due to old files in conf dir
 
-#### v0.2.0 (25th May 2017)
+#### v0.2.0 (25th July 2017)
 
 Features: 
 
