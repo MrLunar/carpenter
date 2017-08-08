@@ -38,12 +38,15 @@ echo "Installing first boot initialization script ..."
 cat >/usr/bin/vagrant-first-boot-init <<'EOL'
 #!/usr/bin/env bash
 set -euo pipefail
-echo "Running apt-daily task..."
-systemctl start apt-daily
-echo "Completed apt-daily task."
-touch /etc/vagrant-first-boot-init-run
-systemctl disable vagrant-first-boot-init
-echo "Done."
+if [ -f /etc/vagrant-first-boot ]; then
+  exit
+fi
+echo "Running unattended-upgrades..."
+unattended-upgrades -v
+echo "Completed unattended-upgrades."
+ufw allow ssh
+touch /etc/vagrant-first-boot
+echo "First boot init successfully completed."
 EOL
 chmod +x /usr/bin/vagrant-first-boot-init
 

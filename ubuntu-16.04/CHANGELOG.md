@@ -1,5 +1,9 @@
 # Change Log - Ubuntu 16.04
 
+#### UNRELEASED
+
+  - Fix security upgrades at first boot. Now blocks SSH until completed.
+
 #### v0.2.0 (25th May 2017)
 
 Features: 

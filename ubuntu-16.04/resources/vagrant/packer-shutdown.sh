@@ -20,5 +20,9 @@ rm -- "$0"
 echo "Clearing command history ..."
 history -cw
 
+# Unblocked after first-init ran
+echo "Blocking SSH ..."
+ufw deny ssh
+
 echo "Shutting down ..."
 shutdown -P now
