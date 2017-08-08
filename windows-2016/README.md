@@ -39,10 +39,10 @@ packer build -var-file=vars/desktop-vagrant-chef12.vars.json desktop-vagrant.jso
 Import boxes to test:
 
 ```
-vagrant box add --force --name test/windows-2016-desktop output/windows-2016/vagrant/windows-2016-desktop-vbox.box
+vagrant box add --force --name test/windows-2016-desktop ../output/windows-2016/vagrant/windows-2016-desktop-vbox.box
 ```
 ```
-vagrant box add --force --name test/windows-2016-desktop-chef12 output/windows-2016/vagrant/windows-2016-desktop-chef12-vbox.box
+vagrant box add --force --name test/windows-2016-desktop-chef12 ../output/windows-2016/vagrant/windows-2016-desktop-chef12-vbox.box
 ```
 
 Test vagrant boxes:
