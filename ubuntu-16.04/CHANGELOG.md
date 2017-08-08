@@ -2,7 +2,7 @@
 
 #### UNRELEASED
 
-  - Fix security upgrades at first boot. Now blocks SSH until completed.
+  - Fix security upgrades at first boot potentially causing apt locks. Now blocks SSH until completed.
 
 #### v0.2.0 (25th May 2017)
 
