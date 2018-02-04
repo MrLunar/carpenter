@@ -2,8 +2,12 @@
 
 #### Unreleased
 
+
+#### v0.0.3 (4th Feb 2018)
+
 Features:
 
+ - Windows updates as of 2018-02-04
  - Significant image size reduction
 
 #### v0.0.2 (6th May 2017)
