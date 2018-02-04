@@ -75,6 +75,10 @@
   "provisioners": [
     {
       "type": "powershell",
+      "script": "{{ user `resources_dir` }}/updates/DisableAutoUpdates.ps1"
+    },
+    {
+      "type": "powershell",
       "only": ["virtualbox-iso"],
       "script": "{{ user `resources_dir` }}/base/InstallVBoxGuestAdditions.ps1"
     },
