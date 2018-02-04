@@ -48,10 +48,10 @@ vagrant box add --force --name test/windows-2016-desktop-chef12 ../output/window
 Test vagrant boxes:
 
 ```
-vagrant up windows-2016-desktop
+vagrant up desktop
 ```
 ```
-vagrant up windows-2016-desktop-chef12
+vagrant up desktop-chef12
 ```
 
 After testing these boxes, they can be uploaded to Atlas if desired: https://atlas.hashicorp.com/vagrant
