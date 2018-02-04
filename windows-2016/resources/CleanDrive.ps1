@@ -9,6 +9,9 @@ try {
 }
 catch { }
 
+Write-Host "Cleaning Windows Update temp files..."
+Remove-Item "C:\Windows\SoftwareDistribution" -Recurse -Force
+
 Write-Host "Optimizing drive ..."
 Optimize-Volume -DriveLetter C
 
