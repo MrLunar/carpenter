@@ -2,7 +2,9 @@
 
 #### Unreleased
 
+Features:
 
+ - Significant image size reduction
 
 #### v0.0.2 (6th May 2017)
 
