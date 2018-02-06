@@ -1,0 +1,6 @@
+{
+    "build_name": "win-2012r2-desktop-vagrant",
+    "source_build": "win-2012r2-desktop-baseupdates",
+    
+    "vagrant_box_name": "windows-2012r2-desktop"
+}

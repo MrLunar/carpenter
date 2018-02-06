@@ -1,0 +1,12 @@
+##
+# Used to test Vagrant boxes locally before publishing.
+##
+
+Vagrant.configure('2') do |config|
+  config.vm.define 'desktop' do |desktop|
+    desktop.vm.box = 'test/windows-2012r2-desktop'
+  end
+  config.vm.define 'desktop-chef12' do |desktopchef12|
+    desktopchef12.vm.box = 'test/windows-2012r2-desktop-chef12'
+  end
+end
