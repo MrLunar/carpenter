@@ -12,6 +12,9 @@ This currently includes:
   - Windows Server 2016 Desktop Experience
     - Vagrant boxes (base, + chef client)
 
+  - Windows Server 2012 R2 Desktop Experience
+    - Vagrant boxes (base)
+
 More coming soon!
 
 
