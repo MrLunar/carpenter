@@ -32,6 +32,21 @@
       "post_shutdown_delay": "30s"
     },
     {
+      "type": "hyperv-vmcx",
+
+      "vm_name": "{{ user `build_name` }}-hyperv",
+      "output_directory": "{{ user `output_dir` }}/{{ user `build_name` }}-hyperv",
+
+      "clone_from_vmxc_path": "{{ user `output_dir` }}/{{ user `source_build` }}-hyperv",
+
+      "communicator": "winrm",
+      "winrm_username": "Administrator",
+      "winrm_password": "packer",
+      
+      "shutdown_command": "shutdown /s /t 0",
+      "shutdown_timeout": "30m"
+    },
+    {
       "type": "vmware-vmx",
 
       "vm_name": "{{ user `build_name` }}-vmware",

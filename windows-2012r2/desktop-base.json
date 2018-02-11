@@ -42,6 +42,35 @@
         ]
       },
       {
+        "type": "hyperv-iso",
+
+        "vm_name": "{{ user `build_name` }}-hyperv",
+        "output_directory": "{{ user `output_dir` }}/{{ user `build_name` }}-hyperv",
+
+        "iso_url": "{{ user `iso_url` }}",
+        "iso_checksum": "{{ user `iso_checksum` }}",
+        "iso_checksum_type": "{{ user `iso_checksum_type` }}",
+
+        "generation": "2",
+        "cpu": "2",
+        "ram_size": "2048",
+
+        "boot_wait": "0s",
+        "boot_command": [
+          "a<wait>a<wait>a<wait>a<wait>a"
+        ],
+
+        "communicator": "winrm",
+        "winrm_username": "Administrator",
+        "winrm_password": "packer",
+
+        "shutdown_command": "shutdown /s /t 0",
+
+        "secondary_iso_images": [
+          "{{ user `resources_dir` }}/base/answer.iso"
+        ]
+      },
+      {
         "type": "vmware-iso",
   
         "vm_name": "{{ user `build_name` }}-vmware",
@@ -74,6 +103,7 @@
     ],
     "provisioners": [
       {
+        "pause_before": "2m",
         "type": "powershell",
         "script": "{{ user `resources_dir` }}/base/DisableAutoUpdates.ps1"
       },
