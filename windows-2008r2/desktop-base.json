@@ -1,0 +1,100 @@
+{
+    "variables": {
+      "build_name": "win-2008r2-desktop-base",
+  
+      "iso_url": "http://download.microsoft.com/download/7/5/E/75EC4E54-5B02-42D6-8879-D8D3A25FBEF7/7601.17514.101119-1850_x64fre_server_eval_en-us-GRMSXEVAL_EN_DVD.iso",
+      "iso_checksum": "4263be2cf3c59177c45085c0a7bc6ca5",
+      "iso_checksum_type": "md5",
+  
+      "output_dir": "../output/windows-2008r2",
+      "resources_dir": "resources"
+    },
+    "builders": [
+      {
+        "type": "virtualbox-iso",
+  
+        "vm_name": "{{ user `build_name` }}-vbox",
+        "output_directory": "{{ user `output_dir` }}/{{ user `build_name` }}-vbox",     
+  
+        "iso_url": "{{ user `iso_url` }}",
+        "iso_checksum": "{{ user `iso_checksum` }}",
+        "iso_checksum_type": "{{ user `iso_checksum_type` }}",
+  
+        "headless": "true",
+        "guest_os_type": "Windows2008_64",
+        "disk_size": "120000",
+        "vboxmanage": [
+          ["modifyvm", "{{.Name}}", "--memory", "2048"],
+          ["modifyvm", "{{.Name}}", "--cpus", "2"]
+        ],
+  
+        "communicator": "winrm",
+        "winrm_username": "Administrator",
+        "winrm_password": "packer",
+        
+        "guest_additions_mode": "attach",
+  
+        "shutdown_command": "shutdown /s /t 0",
+        "post_shutdown_delay": "15s",
+  
+        "floppy_files": [
+          "{{ user `resources_dir` }}/base/Autounattend/Autounattend.xml",
+          "{{ user `resources_dir` }}/base/ConfigureWinRmInsecure.cmd"
+        ]
+      },
+      {
+        "type": "vmware-iso",
+  
+        "vm_name": "{{ user `build_name` }}-vmware",
+        "output_directory": "{{ user `output_dir` }}/{{ user `build_name` }}-vmware",
+        
+        "iso_url": "{{ user `iso_url` }}",
+        "iso_checksum": "{{ user `iso_checksum` }}",
+        "iso_checksum_type": "{{ user `iso_checksum_type` }}",
+        
+        "headless": "true",
+        "guest_os_type": "windows7srv-64",
+        "disk_size": "120000",
+        "vmx_data": {
+          "memsize": "2048",
+          "numvcpus": "2",
+          "scsi0.virtualdev": "lsisas1068",
+          "gui.applyHostDisplayScalingToGuest": "FALSE"
+        },
+  
+        "communicator": "winrm",
+        "winrm_username": "Administrator",
+        "winrm_password": "packer",
+        
+        "shutdown_command": "shutdown /s /t 0",
+        
+        "floppy_files": [
+          "{{ user `resources_dir` }}/base/Autounattend/Autounattend.xml",
+          "{{ user `resources_dir` }}/base/ConfigureWinRmInsecure.cmd"
+        ]
+      }
+    ],
+    "provisioners": [
+      {
+        "type": "powershell",
+        "script": "{{ user `resources_dir` }}/base/DisableAutoUpdates.ps1"
+      },
+      {
+        "type": "powershell",
+        "only": ["virtualbox-iso"],
+        "script": "{{ user `resources_dir` }}/base/InstallVBoxGuestAdditions.ps1"
+      },
+      {
+        "type": "powershell",
+        "only": ["vmware-iso"],
+        "script": "{{ user `resources_dir` }}/base/InstallVMwareTools.ps1"
+      },
+      {
+        "type": "windows-restart"
+      },
+      {
+        "type": "powershell",
+        "script": "{{ user `resources_dir` }}/CleanDrive.ps1"
+      }
+    ]
+  }

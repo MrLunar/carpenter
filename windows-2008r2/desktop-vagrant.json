@@ -1,0 +1,89 @@
+{
+  "variables": {
+    "build_name": null,
+    "source_build": null,
+
+    "vagrant_box_name": null,
+
+    "output_dir": "../output/windows-2008r2",
+    "resources_dir": "resources"
+  },
+  "builders": [
+    {
+      "type": "virtualbox-ovf",
+
+      "vm_name": "{{ user `build_name` }}-vbox",
+      "output_directory": "{{ user `output_dir` }}/{{ user `build_name` }}-vbox",
+      
+      "source_path": "{{ user `output_dir` }}/{{ user `source_build` }}-vbox/{{ user `source_build` }}-vbox.ovf",
+      "headless": "true",      
+      "vboxmanage": [
+        ["modifyvm", "{{.Name}}", "--memory", "2048"],
+        ["modifyvm", "{{.Name}}", "--cpus", "2"]
+      ],
+
+      "communicator": "winrm",
+      "winrm_username": "Administrator",
+      "winrm_password": "packer",
+
+      "guest_additions_mode": "disable",
+
+      "shutdown_command": "C:/Windows/Panther/PackerShutdown.cmd",
+      "shutdown_timeout": "15m",
+      "post_shutdown_delay": "30s"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "file",
+      "source": "{{ user `resources_dir` }}/Configure-WinRmSecureSelfSigned.ps1",
+      "destination": "C:/Windows/Panther/Configure-WinRmSecureSelfSigned.ps1"
+    },
+    {
+      "type": "file",
+      "source": "{{ user `resources_dir` }}/vagrant/Shutdown.cmd",
+      "destination": "C:/Windows/Panther/PackerShutdown.cmd"
+    },
+    {
+      "type": "file",
+      "source": "{{ user `resources_dir` }}/vagrant/Unattend.xml",
+      "destination": "C:/Windows/Panther/Unattend.xml"
+    },
+    {
+      "type": "file",
+      "source": "{{ user `resources_dir` }}/vagrant/SetupComplete.cmd",
+      "destination": "C:/Windows/Setup/Scripts/SetupComplete.cmd"
+    },
+    {
+      "type": "powershell",
+      "inline": "Set-ExecutionPolicy -ExecutionPolicy Bypass -Force"
+    },
+    {
+      "pause_before": "2m",
+      "type": "powershell",
+      "elevated_user": "Administrator",
+      "elevated_password": "packer",
+      "script": "{{ user `resources_dir` }}/vagrant/Provision.ps1"
+    },
+    {
+      "type": "powershell",
+      "scripts": "{{ user `resources_dir` }}/CleanDrive.ps1"
+    },
+    {
+      "type": "powershell",
+      "inline": "Set-ExecutionPolicy -ExecutionPolicy undefined -Force"
+    },
+    {
+      "pause_before": "1m",
+      "type": "windows-restart",
+      "restart_timeout": "15m"
+    }
+  ],
+  "post-processors": [
+    {
+      "type": "vagrant",
+      "vagrantfile_template": "{{ user `resources_dir` }}/vagrant/vagrantfile.rb",
+      "output": "{{ user `output_dir` }}/vagrant/{{ user `vagrant_box_name` }}-vbox.box"
+    }
+  ]
+}

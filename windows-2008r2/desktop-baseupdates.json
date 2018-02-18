@@ -1,0 +1,111 @@
+{
+  "variables": {
+    "build_name": "win-2008r2-desktop-baseupdates",
+    "source_build": "win-2008r2-desktop-base",
+
+    "output_dir": "../output/windows-2008r2",
+    "resources_dir": "resources"
+  },
+  "builders": [
+    {
+      "type": "virtualbox-ovf",
+
+      "vm_name": "{{ user `build_name` }}-vbox",
+      "output_directory": "{{ user `output_dir` }}/{{ user `build_name` }}-vbox",
+
+      "source_path": "{{ user `output_dir` }}/{{ user `source_build` }}-vbox/{{ user `source_build` }}-vbox.ovf",
+
+      "headless": "true",
+      "vboxmanage": [
+        ["modifyvm", "{{.Name}}", "--memory", "4096"],
+        ["modifyvm", "{{.Name}}", "--cpus", "2"]
+      ],
+
+      "communicator": "winrm",
+      "winrm_username": "Administrator",
+      "winrm_password": "packer",
+
+      "guest_additions_mode": "disable",
+
+      "shutdown_command": "shutdown /s /t 0",
+      "shutdown_timeout": "30m",
+      "post_shutdown_delay": "30s"
+    },
+    {
+      "type": "vmware-vmx",
+
+      "vm_name": "{{ user `build_name` }}-vmware",
+
+      "output_directory": "{{ user `output_dir` }}/{{ user `build_name` }}-vmware",
+      "source_path": "{{ user `output_dir` }}/{{ user `source_build` }}-vmware/{{ user `source_build` }}-vmware.vmx",
+      "headless": "true",
+
+      "communicator": "winrm",
+      "winrm_username": "Administrator",
+      "winrm_password": "packer",
+
+      "shutdown_command": "shutdown /s /t 0",
+      "shutdown_timeout": "30m"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "file",
+      "source": "{{ user `resources_dir` }}/updates/PSWindowsUpdate_1.4.5.zip",
+      "destination": "C:\\Windows\\Temp\\PSWindowsUpdate.zip"
+    },
+    {
+      "type": "powershell",
+      "inline": "Set-ExecutionPolicy -ExecutionPolicy Bypass -Force"
+    },
+    {
+      "type": "powershell",
+      "elevated_user": "Administrator",
+      "elevated_password": "packer",
+      "script": "{{ user `resources_dir` }}/updates/Install-RollupUpdate.ps1"
+    },
+    {
+      "pause_before": "1m",
+      "type": "windows-restart",
+      "restart_timeout": "30m"
+    },
+    {
+      "pause_before": "5m",
+      "type": "powershell",
+      "elevated_user": "Administrator",
+      "elevated_password": "packer",
+      "script": "{{ user `resources_dir` }}/updates/Install-WindowsUpdates.ps1"
+    },
+    {
+      "pause_before": "1m",
+      "type": "windows-restart",
+      "restart_timeout": "30m"
+    },
+    {
+      "pause_before": "5m",
+      "type": "powershell",
+      "elevated_user": "Administrator",
+      "elevated_password": "packer",
+      "script": "{{ user `resources_dir` }}/updates/Install-WindowsUpdates.ps1"
+    },
+    {
+      "pause_before": "2m",
+      "type": "windows-restart",
+      "restart_timeout": "30m"
+    },
+    {
+      "pause_before": "10m",
+      "type": "windows-restart",
+      "restart_timeout": "30m"
+    },
+    {
+      "type": "powershell",
+      "inline": "Set-ExecutionPolicy -ExecutionPolicy undefined -Force"
+    },
+    {
+      "pause_before": "1m",
+      "type": "powershell",
+      "script": "{{ user `resources_dir` }}/CleanDrive.ps1"
+    }
+  ]
+}
