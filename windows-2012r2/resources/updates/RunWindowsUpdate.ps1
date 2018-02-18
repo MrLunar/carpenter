@@ -11,14 +11,10 @@ if (!(Test-Path "$installPath\pswindowsupdate")) {
 Import-Module PSWindowsUpdate
 
 Write-Host "Installing updates..."
-Get-WUInstall -AcceptAll -IgnoreReboot -IgnoreUserInput -verbose | `
-    Format-List -Property Status,KB,Size,Title
-
-Write-Host "Listing any remaining updates..."
-Get-WUList -IgnoreReboot -IgnoreUserInput -verbose | `
-    Format-List -Property Status,KB,Size,Title
+Get-WUInstall -AcceptAll -IgnoreReboot -IgnoreUserInput -Category "Critical Update","Security Update","Definition Update","Update Rollup"
 
 Write-Host "Cleaning up..."
+Remove-Module PSWindowsUpdate
 Remove-Item "c:\windows\system32\windowspowershell\v1.0\modules\pswindowsupdate" -Recurse
 
 Write-Host "Completed installing Windows updates."
