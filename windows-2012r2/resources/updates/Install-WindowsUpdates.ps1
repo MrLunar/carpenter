@@ -11,7 +11,8 @@ if (!(Test-Path "$installPath\pswindowsupdate")) {
 Import-Module PSWindowsUpdate
 
 Write-Host "Installing updates..."
-Get-WUInstall -AcceptAll -IgnoreReboot -IgnoreUserInput -Category "Critical Update","Security Update","Definition Update","Update Rollup"
+Get-WUInstall -AcceptAll -IgnoreReboot -IgnoreUserInput `
+    -Category "Critical Update","Security Update","Definition Update","Update Rollup"
 
 Write-Host "Cleaning up..."
 Remove-Module PSWindowsUpdate

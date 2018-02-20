@@ -17,7 +17,7 @@
 
       "headless": "true",
       "vboxmanage": [
-        ["modifyvm", "{{.Name}}", "--memory", "2048"],
+        ["modifyvm", "{{.Name}}", "--memory", "4096"],
         ["modifyvm", "{{.Name}}", "--cpus", "2"]
       ],
 
@@ -75,7 +75,7 @@
       "elevated_user": "Administrator",
       "elevated_password": "packer",
       "scripts": [
-        "{{ user `resources_dir` }}/updates/RunWindowsUpdate.ps1"
+        "{{ user `resources_dir` }}/updates/Install-WindowsUpdates.ps1"
       ]
     },
     {
@@ -84,7 +84,21 @@
       "restart_timeout": "30m"
     },
     {
-      "pause_before": "60m",
+      "pause_before": "5m",
+      "type": "powershell",
+      "elevated_user": "Administrator",
+      "elevated_password": "packer",
+      "scripts": [
+        "{{ user `resources_dir` }}/updates/Install-WindowsUpdates.ps1"
+      ]
+    },
+    {
+      "pause_before": "2m",
+      "type": "windows-restart",
+      "restart_timeout": "30m"
+    },
+    {
+      "pause_before": "30m",
       "type": "windows-restart",
       "restart_timeout": "30m"
     },

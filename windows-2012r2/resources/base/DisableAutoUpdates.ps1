@@ -1,5 +1,13 @@
 Write-Host "Disabling automatic Windows Update..."
-if (!(Test-Path HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate)) {
-    New-Item HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate
+
+Stop-Service wuauserv
+
+$wuKey = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate"
+if (!(Test-Path $wuKey)) {
+    New-Item $wuKey
 }
-Set-ItemProperty -Path HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU -Name NoAutoUpdate -Value 1
+if (!(Test-Path $wuKey\AU)) {
+    New-Item $wuKey\AU
+}
+
+Set-ItemProperty -Path $wuKey\AU -Name NoAutoUpdate -Value 1
