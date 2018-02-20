@@ -15,9 +15,6 @@
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
             <OOBE>
                 <HideEULAPage>true</HideEULAPage>
-                <ProtectYourPC>1</ProtectYourPC>
-                <NetworkLocation>Work</NetworkLocation>
-                <HideWirelessSetupInOOBE>true</HideWirelessSetupInOOBE>
             </OOBE>
             <TimeZone>UTC</TimeZone>
             <UserAccounts>
@@ -26,15 +23,6 @@
                     <PlainText>true</PlainText>
                 </AdministratorPassword>
             </UserAccounts>
-            <AutoLogon>
-                <Password>
-                    <Value>vagrant</Value>
-                    <PlainText>true</PlainText>
-                </Password>
-                <Username>vagrant</Username>
-                <Enabled>true</Enabled>
-                <LogonCount>999999999</LogonCount>
-            </AutoLogon>
         </component>
     </settings>
     <settings pass="specialize"></settings>

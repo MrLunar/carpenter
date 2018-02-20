@@ -2,8 +2,9 @@
 
 #### Unreleased
 
+ - Removed customisations that aren't an OOBE experience and are not required 
+   to function as a vagrant VM. 
  - `PersistAllDeviceInstalls` for small reduction in initial boot time
-
 
 #### v2018.02.18
 
