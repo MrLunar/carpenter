@@ -21,7 +21,8 @@
         "iso_checksum_type": "{{ user `iso_checksum_type` }}",
   
         "headless": "true",
-        "guest_os_type": "Windows2012_64",      
+        "guest_os_type": "Windows2012_64",
+        "disk_size": "120000",
         "vboxmanage": [
           ["modifyvm", "{{.Name}}", "--memory", "2048"],
           ["modifyvm", "{{.Name}}", "--cpus", "2"]
@@ -54,6 +55,7 @@
         "generation": "2",
         "cpu": "2",
         "ram_size": "2048",
+        "disk_size": "120000",
 
         "boot_wait": "0s",
         "boot_command": [
@@ -82,6 +84,7 @@
         
         "headless": "true",
         "guest_os_type": "windows8srv-64",
+        "disk_size": "120000",
         "vmx_data": {
           "memsize": "2048",
           "numvcpus": "2",
