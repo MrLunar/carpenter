@@ -1,6 +1,9 @@
 # Change Log - Windows Server 2012 R2
 
-#### Unreleased
+### Unreleased
+
+
+#### v2018.02.22
 
  - Increase disk size to 120GB from 40GB
  - Removed customisations that aren't an OOBE experience and are not required 
