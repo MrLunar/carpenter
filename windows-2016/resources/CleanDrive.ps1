@@ -18,7 +18,7 @@ Optimize-Volume -DriveLetter C
 Write-Host "Wiping empty space on disk..."
 $FilePath = "c:\zero.tmp"
 $Volume = Get-WmiObject win32_logicaldisk -filter "DeviceID='C:'"
-$ArraySize = 64kb
+$ArraySize = 32MB
 $SpaceToLeave = $Volume.Size * 0.05
 $FileSize = $Volume.FreeSpace - $SpacetoLeave
 $ZeroArray = new-object byte[]($ArraySize)
