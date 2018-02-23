@@ -24,9 +24,6 @@ net localgroup "Administrators" $adminUser /add
 net localgroup "Remote Desktop Users" $adminUser /add
 net localgroup "Remote Management Users" $adminUser /add
 
-Write-Host "Disabling new network wizard (device discovery) ..."
-New-Item -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Network\NewNetworkWindowOff" -Force
-
 Write-Host "Enabling remote desktop ..."
 Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Terminal Server" -Name "fDenyTSConnections" -Value 0
 

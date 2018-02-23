@@ -15,9 +15,6 @@
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
             <OOBE>
                 <HideEULAPage>true</HideEULAPage>
-                <ProtectYourPC>1</ProtectYourPC>
-                <NetworkLocation>Work</NetworkLocation>
-                <HideWirelessSetupInOOBE>true</HideWirelessSetupInOOBE>
             </OOBE>
             <TimeZone>UTC</TimeZone>
             <UserAccounts>
