@@ -23,15 +23,6 @@
                     <PlainText>true</PlainText>
                 </AdministratorPassword>
             </UserAccounts>
-            <AutoLogon>
-                <Password>
-                    <Value>vagrant</Value>
-                    <PlainText>true</PlainText>
-                </Password>
-                <Username>vagrant</Username>
-                <Enabled>true</Enabled>
-                <LogonCount>999999999</LogonCount>
-            </AutoLogon>
         </component>
     </settings>
     <settings pass="specialize"></settings>
