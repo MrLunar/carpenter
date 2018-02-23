@@ -19,11 +19,6 @@ Now we can update the base image with the latest updates. WARNING: This stage wi
 packer build desktop-baseupdates.json
 ```
 
-Images with configuration management clients installed are also currently considered base images:
-
-```
-packer build desktop-chef12.json
-```
 
 ## Vagrant
 
@@ -32,26 +27,17 @@ Build vagrant boxes:
 ```
 packer build -var-file=vars/desktop-vagrant-nocm.vars.json desktop-vagrant.json
 ```
-```
-packer build -var-file=vars/desktop-vagrant-chef12.vars.json desktop-vagrant.json
-```
 
 Import boxes to test:
 
 ```
 vagrant box add --force --name test/windows-2012r2-desktop ../output/windows-2012r2/vagrant/windows-2012r2-desktop-vbox.box
 ```
-```
-vagrant box add --force --name test/windows-2012r2-desktop-chef12 ../output/windows-2012r2/vagrant/windows-2012r2-desktop-chef12-vbox.box
-```
 
 Test vagrant boxes:
 
 ```
 vagrant up desktop
-```
-```
-vagrant up desktop-chef12
 ```
 
 After testing these boxes, they can be uploaded to Atlas if desired: https://atlas.hashicorp.com/vagrant
