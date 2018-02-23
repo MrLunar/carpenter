@@ -49,13 +49,29 @@
   ],
   "provisioners": [
     {
+      "type": "file",
+      "source": "{{ user `resources_dir` }}/updates/PSWindowsUpdate_1.4.5.zip",
+      "destination": "C:\\Windows\\Temp\\PSWindowsUpdate.zip"
+    },
+    {
       "pause_before": "2m",
       "type": "powershell",
       "elevated_user": "Administrator",
       "elevated_password": "packer",
+      "script": "{{ user `resources_dir` }}/updates/Install-WindowsUpdates.ps1"
+    },
+    {
+      "pause_before": "2m",
+      "type": "windows-restart",
+      "restart_timeout": "30m"
+    },
+    {
+      "pause_before": "5m",
+      "type": "powershell",
+      "elevated_user": "Administrator",
+      "elevated_password": "packer",
       "scripts": [
-        "{{ user `resources_dir` }}/updates/EnableMicrosoftUpdates.ps1",
-        "{{ user `resources_dir` }}/updates/RunWindowsUpdate.ps1"
+        "{{ user `resources_dir` }}/updates/Install-WindowsUpdates.ps1"
       ]
     },
     {
