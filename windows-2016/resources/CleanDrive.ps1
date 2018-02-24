@@ -10,7 +10,8 @@ try {
 catch { }
 
 Write-Host "Cleaning Windows Update temp files..."
-Remove-Item "C:\Windows\SoftwareDistribution" -Recurse -Force
+Stop-Service wuauserv
+Remove-Item "C:\Windows\SoftwareDistribution\Download" -Recurse -Force
 
 Write-Host "Optimizing drive ..."
 Optimize-Volume -DriveLetter C
