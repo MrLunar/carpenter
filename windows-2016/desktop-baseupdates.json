@@ -80,7 +80,7 @@
       "restart_timeout": "30m"
     },
     {
-      "pause_before": "60m",
+      "pause_before": "30m",
       "type": "windows-restart",
       "restart_timeout": "30m"
     },
