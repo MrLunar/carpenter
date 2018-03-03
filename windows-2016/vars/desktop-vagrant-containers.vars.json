@@ -1,0 +1,6 @@
+{
+    "build_name": "win-2016-desktop-containers-vagrant",
+    "source_build": "win-2016-desktop-containers",
+    
+    "vagrant_box_name": "windows-server-2016-containers"
+}
