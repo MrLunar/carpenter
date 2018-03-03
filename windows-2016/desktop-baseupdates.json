@@ -81,13 +81,11 @@
       "restart_timeout": "30m"
     },
     {
-      "pause_before": "5m",
+      "pause_before": "2m",
       "type": "powershell",
       "elevated_user": "Administrator",
       "elevated_password": "packer",
-      "scripts": [
-        "{{ user `resources_dir` }}/updates/Install-WindowsUpdates.ps1"
-      ]
+      "script": "{{ user `resources_dir` }}/updates/Install-WindowsUpdates.ps1"
     },
     {
       "pause_before": "2m",
