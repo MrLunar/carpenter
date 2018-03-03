@@ -123,10 +123,6 @@
     },
     {
       "type": "windows-restart"
-    },
-    {
-      "type": "powershell",
-      "script": "{{ user `resources_dir` }}/CleanDrive.ps1"
     }
   ]
 }
