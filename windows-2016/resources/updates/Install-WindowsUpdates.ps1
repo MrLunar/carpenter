@@ -11,11 +11,9 @@ if (!(Test-Path "$installPath\pswindowsupdate")) {
 }
 Import-Module PSWindowsUpdate
 
-$qualityCompatKeyAdded = $false
 if (!(Test-Path "HKLM:SOFTWARE\Microsoft\Windows\CurrentVersion\QualityCompat")) {
     New-Item "HKLM:SOFTWARE\Microsoft\Windows\CurrentVersion\QualityCompat"
     New-ItemProperty "HKLM:SOFTWARE\Microsoft\Windows\CurrentVersion\QualityCompat" -Name "cadca5fe-87d3-4b96-b7fb-a231484277cc" -PropertyType dword -Value 0
-    $qualityCompatKeyAdded = $true
 }
 
 Write-Host "Installing Windows updates..."
@@ -24,8 +22,5 @@ Get-WUInstall -AcceptAll -IgnoreReboot -IgnoreUserInput
 Write-Host "Cleaning up..."
 Remove-Module PSWindowsUpdate
 Remove-Item "c:\windows\system32\windowspowershell\v1.0\modules\pswindowsupdate" -Recurse
-if ($qualityCompatKeyAdded) {
-    Remove-Item -Recurse "HKLM:SOFTWARE\Microsoft\Windows\CurrentVersion\QualityCompat"
-}
 
 Write-Host "Completed installing Windows updates."
