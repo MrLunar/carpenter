@@ -4,9 +4,12 @@
 
 Vagrant.configure('2') do |config|
   config.vm.define 'desktop' do |desktop|
-    desktop.vm.box = 'test/windows-2016-desktop'
+    desktop.vm.box = 'test/windows-server-2016'
+  end
+  config.vm.define 'desktop-containers' do |desktopcontainers|
+    desktopcontainers.vm.box = 'test/windows-server-2016-containers'
   end
   config.vm.define 'desktop-chef12' do |desktopchef12|
-    desktopchef12.vm.box = 'test/windows-2016-desktop-chef12'
+    desktopchef12.vm.box = 'test/windows-server-2016-chef12'
   end
 end

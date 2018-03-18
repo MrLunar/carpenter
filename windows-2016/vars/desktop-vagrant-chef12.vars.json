@@ -2,5 +2,5 @@
     "build_name": "win-2016-desktop-chef12-vagrant",
     "source_build": "win-2016-desktop-chef12",
     
-    "vagrant_box_name": "windows-2016-desktop-chef12"
+    "vagrant_box_name": "windows-server-2016-chef12"
 }

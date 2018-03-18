@@ -31,7 +31,7 @@ packer build -var-file=vars/desktop-vagrant-nocm.vars.json desktop-vagrant.json
 Import boxes to test:
 
 ```
-vagrant box add --force --name test/windows-2016-desktop ../output/windows-2016/vagrant/windows-2016-desktop-vbox.box
+vagrant box add --force --name test/windows-server-2016 ../output/windows-2016/vagrant/windows-server-2016-vbox.box
 ```
 
 Test vagrant boxes:
