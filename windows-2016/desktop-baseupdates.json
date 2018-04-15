@@ -93,9 +93,9 @@
       "restart_timeout": "30m"
     },
     {
-      "pause_before": "30m",
-      "type": "windows-restart",
-      "restart_timeout": "30m"
+      "pause_before": "1m",
+      "type": "powershell",
+      "script": "{{ user `resources_dir` }}/WaitFor-Optimisations.ps1"
     },
     {
       "pause_before": "5m",
