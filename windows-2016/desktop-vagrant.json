@@ -14,9 +14,9 @@
 
       "vm_name": "{{ user `build_name` }}-vbox",
       "output_directory": "{{ user `output_dir` }}/{{ user `build_name` }}-vbox",
-      
+
       "source_path": "{{ user `output_dir` }}/{{ user `source_build` }}-vbox/{{ user `source_build` }}-vbox.ovf",
-      "headless": "true",      
+      "headless": "true",
       "vboxmanage": [
         ["modifyvm", "{{.Name}}", "--memory", "2048"],
         ["modifyvm", "{{.Name}}", "--cpus", "2"]
