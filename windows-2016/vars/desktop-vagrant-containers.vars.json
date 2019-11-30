@@ -1,6 +1,8 @@
 {
     "build_name": "win-2016-desktop-containers-vagrant",
     "source_build": "win-2016-desktop-containers",
-    
-    "vagrant_box_name": "windows-server-2016-containers"
+
+    "vagrant_box_name": "windows-server-2016-containers",
+
+    "vagrantfile_template": "resources/vagrant/vagrantfile-containers.rb"
 }

@@ -2,7 +2,6 @@
 
 #### Unreleased
 
- - Important Windows updates as of 2018-02-22
  - Increase disk size to 120G from 40G
  - Increase default memory to 2G from 1G
  - Removed customisations that aren't an OOBE experience and are not required 

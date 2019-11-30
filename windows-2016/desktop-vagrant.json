@@ -6,7 +6,9 @@
     "vagrant_box_name": null,
 
     "output_dir": "../output/windows-2016",
-    "resources_dir": "resources"
+    "resources_dir": "resources",
+
+    "vagrantfile_template": "resources/vagrant/vagrantfile.rb"
   },
   "builders": [
     {
@@ -65,7 +67,7 @@
   "post-processors": [
     {
       "type": "vagrant",
-      "vagrantfile_template": "{{ user `resources_dir` }}/vagrant/vagrantfile.rb",
+      "vagrantfile_template": "{{user `vagrantfile_template`}}",
       "output": "{{ user `output_dir` }}/vagrant/{{ user `vagrant_box_name` }}-vbox.box"
     }
   ]

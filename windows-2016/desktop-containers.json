@@ -49,7 +49,6 @@
   ],
   "provisioners": [
     {
-      "pause_before": "2m",
       "type": "powershell",
       "elevated_user": "Administrator",
       "elevated_password": "packer",
